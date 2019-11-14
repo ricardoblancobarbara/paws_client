@@ -7,7 +7,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #1da006;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,4 +19,17 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.btn-secondary:not(:disabled):not(.disabled) {
+  background-color: green;  
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active {
+  background-color: darkgreen;  
+}
+
+.navbar-light .navbar-brand {
+  font-family: 'Pacifico', cursive;
+  font-size: 2.5rem;
 }

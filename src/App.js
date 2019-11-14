@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
+import Sitebar from './home/Sitebar';
+import Auth from './auth/Auth'
+import ServiceIndex from './services/ServiceIndex';
 
 function App() {
+  const [sessionToken, setSessionToken] = useState('');
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      setSessionToken(localStorage.getItem('token'))
+    }
+  }, [])
+
+  const updateToken = (newToken) => {
+    localStorage.setItem('token', newToken);
+    setSessionToken(newToken);
+    console.log(sessionToken);
+  }
+
+  const clearToken = () => {
+    localStorage.clear();
+    setSessionToken('');
+  }
+
+  const protectedViews = () => {
+    return (sessionToken === localStorage.getItem('token') ?
+    <ServiceIndex token={sessionToken} /> : <Auth updateToken={updateToken} />)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div /*className="App"*/>
+      <Sitebar clickLogout={clearToken} />
+      {protectedViews()}
+      {/*<Auth updateToken={updateToken} />*/}
     </div>
   );
 }
